@@ -1,0 +1,7 @@
+ipython
+jupyterlab
+tqdm
+ipywidgets
+chromadb-client
+ollama
+networkx
