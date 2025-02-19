@@ -1,12 +1,13 @@
-FROM python:3.11-buster
+FROM python:3.13-bookworm
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+ENV UV_PROJECT_ENVIRONMENT=/opt/venv
 
 # Install dependencies:
-COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY pyproject.toml uv.lock .python-version ./
+RUN uv sync --frozen
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Run the application:
 COPY scripts/ /opt/scripts/
