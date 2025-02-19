@@ -6,11 +6,13 @@ services:
       - ds-pub-ollama:/root/.ollama
     ports:
       - 11434:11434
-  
+
   chroma:
     image: chromadb/chroma
     volumes:
       - chroma-data:/chroma/chroma
+    environment:
+      - ANONYMIZED_TELEMETRY=False
     ports:
       - 8000:8000
 
@@ -24,7 +26,6 @@ services:
     ports:
       - 127.0.0.1:8888:8888
     command: jupyter lab --allow-root --ip 0.0.0.0 --no-browser --NotebookApp.token=""  notebook.ipynb
-
 
 volumes:
   ds-pub-ollama:
